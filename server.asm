@@ -3,8 +3,10 @@ global _start
 section .data
     address dw 2
             db 05h, 39h ;
-            db 7bh, 00h, 00h, 01h;
-    addlen  db 16
+            db 7fh, 00h, 00h, 01h;
+	    db 00h, 00h, 00h, 00h;
+	    db 00h, 00h, 00h, 00h;
+    addlen  db 16h, 00h, 00h, 00h;
     msg     db "Hello World!", 10h
 
 
@@ -24,7 +26,7 @@ _start:
     mov rax, 49
     mov rdi, [rbp-8]
     mov rsi, address
-    mov rdx, addlen
+    mov rdx, 16
     syscall ;bind 호출
 
     mov rax, 50
@@ -36,13 +38,14 @@ _start:
     mov rax, 43
     mov rdi, [rbp-8]
     mov rsi, rsp
-    mov rdx, 16
+    mov rdx, addlen
     syscall ;accept 호출
-
+    
+    push rax
     mov rax, 1
-    mov rdi, [rbp-8]
+    mov rdi, [rsp]
     mov rsi, msg
-    mov rdx, 13
+    mov rdx, 16
     syscall ;write로 쓰기
 
     mov rax, 60
