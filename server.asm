@@ -15,6 +15,7 @@ section .text
 _start:
     push rbp
     mov rbp, rsp
+    
     mov rax, 41
     mov rdi, 2
     mov rsi, 1
